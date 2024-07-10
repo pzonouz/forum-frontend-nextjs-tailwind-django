@@ -10,7 +10,7 @@ const QuestionPage = async (props) => {
   const { question } = props;
   let solved = false;
   const response = await fetch(
-    `http://localhost/api/v1/answers/?search_field=question_id&search_field_value=${question?.id}`,
+    `http://localhost/api/v1/question/${question?.id}/answers`,
     {
       cache: "no-store",
     },

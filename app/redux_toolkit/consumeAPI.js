@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://localhost/api/v1/",
+    baseUrl: "http://localhost/api/v1/",
     credentials: "include",
     headers: {
       "content-type": "application/json",
@@ -26,7 +26,7 @@ export const api = createApi({
       }),
       createAnswer: builder.mutation({
         query: ({ questionId, ...question }) => ({
-          url: `answers/${questionId}`,
+          url: `question/${questionId}/answers/`,
           method: "POST",
           body: question,
         }),
@@ -89,7 +89,7 @@ export const api = createApi({
       }),
       editQuestion: builder.mutation({
         query: ({ id, ...question }) => ({
-          url: `questions/${id}`,
+          url: `questions/${id}/`,
           method: "PATCH",
           body: question,
         }),
@@ -104,7 +104,7 @@ export const api = createApi({
       }),
       editAnswer: builder.mutation({
         query: ({ id, ...answer }) => ({
-          url: `answers/${id}`,
+          url: `answers/${id}/`,
           method: "PATCH",
           body: answer,
         }),
@@ -112,14 +112,14 @@ export const api = createApi({
       }),
       deleteAnswer: builder.mutation({
         query: (id) => ({
-          url: `answers/${id}`,
+          url: `answers/${id}/`,
           method: "DELETE",
         }),
         invalidatesTags: ["answer", "question"],
       }),
       createScoreQuestion: builder.mutation({
         query: ({ id, ...payload }) => ({
-          url: `scores/questions/${id}`,
+          url: `scores/question/${id}`,
           method: "POST",
           body: payload,
         }),
@@ -127,13 +127,13 @@ export const api = createApi({
       }),
       fetchScoreQuestion: builder.query({
         query(id) {
-          return `scores/questions/${id}`;
+          return `scores/question/${id}`;
         },
         providesTags: ["score_question", "question"],
       }),
       createScoreAnswer: builder.mutation({
         query: ({ id, ...payload }) => ({
-          url: `scores/answers/${id}`,
+          url: `scores/answer/${id}`,
           method: "POST",
           body: payload,
         }),
@@ -141,7 +141,7 @@ export const api = createApi({
       }),
       fetchScoreAnswer: builder.query({
         query(id) {
-          return `scores/answers/${id}`;
+          return `scores/answer/${id}`;
         },
         providesTags: ["score_answer"],
       }),
@@ -154,7 +154,7 @@ export const api = createApi({
       }),
       loginUser: builder.mutation({
         query: ({ ...user }) => ({
-          url: `users/login`,
+          url: `login`,
           method: "POST",
           body: user,
         }),
@@ -169,7 +169,7 @@ export const api = createApi({
       }),
       logoutUser: builder.mutation({
         query: () => ({
-          url: `users/logout`,
+          url: `logout`,
         }),
       }),
       fetchUser: builder.query({

@@ -17,7 +17,7 @@ const DeleteAnswer = (props) => {
   const { isError: isUserError, data: user } = useFetchUserQuery();
   useEffect(() => {
     if (isSuccess) {
-      window.location.href = `/questions/${answer?.questionId}`;
+      window.location.href = `/questions/${answer?.question}`;
     }
   }, [isSuccess, answer]);
 

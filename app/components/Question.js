@@ -7,11 +7,12 @@ const Question = ({
   view,
   answerCount,
   title,
-  userName = "ناشناس",
+  user,
   createdAt,
   userId,
   solved,
 }) => {
+  console.log(createdAt);
   const date = new Date(createdAt);
   const createdAtPersian = date.toLocaleString("fa-IR");
   return (
@@ -47,7 +48,7 @@ const Question = ({
           className="text-blue-500 text-sm flex flex-row-reverse"
           href={`users/${userId}`}
         >
-          {userName}
+          {user?.nickName}
         </Link>
       </div>
     </div>
