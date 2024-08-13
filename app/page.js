@@ -14,11 +14,12 @@ export default function Home() {
     orderBy: "created_at",
     orderDirection: "DESC",
   });
-  const { data: questions, error, isLoading } = useFetchQuestionsQuery(payload);
+  const { data: questions, error, isLoading,refetch } = useFetchQuestionsQuery(payload);
 
   function setOrderHandler(input) {
     setOrder(input);
   }
+  useEffect(()=>{refetch()},[])
   useEffect(() => {
     switch (order) {
       case questionOrderEnum.newest:

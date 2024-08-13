@@ -20,7 +20,7 @@ export const api = createApi({
       makeAnswerSolved: builder.mutation({
         query: (id) => ({
           url: `answers/${id}/solved`,
-          method: "POST",
+          method: "PATCH",
         }),
         invalidatesTags: ["answer", "question"],
       }),
@@ -147,7 +147,7 @@ export const api = createApi({
       }),
       registerUser: builder.mutation({
         query: ({ ...user }) => ({
-          url: `users/register`,
+          url: `users/`,
           method: "POST",
           body: user,
         }),

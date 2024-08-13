@@ -10,8 +10,8 @@ import { useEffect, useState } from "react";
 const Register = () => {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
-  const [nickName, setNickName] = useState("");
-  const [nickNameError, setNickNameError] = useState(false);
+  const [username, setNickName] = useState("");
+  const [usernameError, setNickNameError] = useState(false);
   const schema = z
     .object({
       email: z
@@ -20,7 +20,7 @@ const Register = () => {
         .email({ message: "ساختار ایمیل درست نیست" }),
       password1: z.string().min(6, { message: "حداقل ۶ کاراکتر وارد نمایید" }),
       password2: z.string().min(6, { message: "حداقل ۶ کاراکتر وارد نمایید" }),
-      nickName: z.string().min(1, { message: "نام را وارد نمایید" }),
+      username: z.string().min(1, { message: "نام را وارد نمایید" }),
       phoneNumber: z
         .string()
         .min(11, { message: "موبایل را درست وارد نمایید" }),
@@ -66,10 +66,10 @@ const Register = () => {
     });
   }, [email]);
   useEffect(() => {
-    fetch("http://localhost/api/v1/users/is_unique_nickname", {
+    fetch("http://localhost/api/v1/users/is_unique_username", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ nickName: nickName }),
+      body: JSON.stringify({ username: username }),
     }).then((res) => {
       if (!res.ok) {
         setNickNameError(true);
@@ -77,9 +77,10 @@ const Register = () => {
         setNickNameError(false);
       }
     });
-  }, [nickName]);
+  }, [username]);
   const submitHandler = (data) => {
     data.password = data.password1;
+    data.username = data.email;
     registerUser(data);
   };
   return (
@@ -125,18 +126,18 @@ const Register = () => {
         <p className="error ">{errors?.password2?.message}</p>
         <input
           placeholder="نام"
-          value={nickName}
-          {...register("nickName")}
+          value={username}
+          {...register("username")}
           type="text"
           onChange={(e) => {
             setNickName(e.target.value);
           }}
           className={classNames("input w-full", {
-            "error-border": errors?.nickName?.message || nickNameError,
+            "error-border": errors?.username?.message || usernameError,
           })}
         />
-        <p className="error ">{errors?.nickName?.message}</p>
-        {nickNameError && <p className="error "> قبلا ثبت شده است</p>}
+        <p className="error ">{errors?.username?.message}</p>
+        {usernameError && <p className="error "> قبلا ثبت شده است</p>}
 
         <input
           placeholder="تلفن همراه"
@@ -150,7 +151,7 @@ const Register = () => {
         <p className="error">{errors?.confirmPassword?.message}</p>
         <button
           className="button button_primary"
-          disabled={emailError || nickNameError}
+          disabled={emailError || usernameError}
         >
           ثبت
         </button>
